@@ -31,12 +31,39 @@ var student=new Student(req.body);
 student.save(function(err){
     if(err){
         chalk.red(console.log(err));
-        res.send("error occured in registration");        
+        return res.send("error occured in registration");        
     }
-    res.send("You have registered successfully");
+    return res.send("You have registered successfully");
 })
 console.log(req.body);
 
+})
+
+app.post('/checkMail',function(req,res){
+    Student.find({emailid:req.body.email},function(err,user){
+        console.log("inside find");
+        if(err){
+            console.log("database error");
+            res.send("Error Occured");   
+        }
+        console.log(user);
+        if(user.length!=0){
+            res.send("Email id already exists");
+        }
+    })
+})
+app.post('/checkPhone',function(req,res){
+    Student.find({phoneno:req.body.phoneno},function(err,user){
+        console.log("inside find");
+        if(err){
+            console.log("database error");
+            res.send("Error Occured");   
+        }
+        console.log(user);
+        if(user.length!=0){
+            res.send("Phone No already exists");
+        }
+    })
 })
 app.listen(port,function(){
 chalk.green(console.log("server is listening at PORT: "+port));

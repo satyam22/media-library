@@ -14,6 +14,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/register.js"></script>
 </head>
 <body>
 <div class="container">
@@ -87,14 +88,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Phone No</label>
-            <input type="text" name="phoneno" placeholder="PHONE NO" class="form-control">
+            <label>Phone No <span id="phonewarning" style="color:red"></span></label>
+            <input type="text" name="phoneno" id="phoneno" placeholder="PHONE NO" class="form-control" onblur="checkPhoneStatus()" onchange="resetPhoneValue()">
+            
         </div>
         <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="emailid" placeholder="EMAIL ADDRESS" class="form-control">
+            <label>Email Address <span id="emailwarning" style="color:red"></span></label>
+            <input type="email" name="emailid" id="emailid" placeholder="EMAIL ADDRESS" class="form-control" onblur="checkMailStatus()" onchange="resetEmailValue()">
+            
         </div>
-        <button type="submit" class="btn btn-block btn-success">Submit</button>
+        <button type="submit" class="btn btn-block btn-success" id="submit" >Submit</button>
     </form>
 </div>
 </body>

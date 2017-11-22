@@ -13,7 +13,9 @@ var StudentSchema=mongoose.Schema({
     city:{type:String,required:true},
     zipcode:{type:String,required:true},
     phoneno:{type:Number,require:true,unique:true},
-    emailid:{type:String,required:true,unique:true}
+    emailid:{type:String,required:true,unique:true},
+    username:{type:String,unique:true},
+    password:{type:String}
 });
 
 var Student=mongoose.model('Student',StudentSchema);
