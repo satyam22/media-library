@@ -54,3 +54,12 @@
           margin-left: auto;
       }
   }
+  .login-body{
+      background-color:floralwhite;
+  }
+  .login-panel{
+      margin-top: 140px;
+  }
+  .login-panel button{
+      margin-top: 15px;
+  }

@@ -39,7 +39,6 @@ function resetEmailValue(){
     document.getElementById('emailwarning').innerHTML="";
     valid_email=true;
     if(valid_phone){
-        $('#submit').prop({disabled:false});
-        
+        $('#submit').prop({disabled:false});        
     }
 }
