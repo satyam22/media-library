@@ -6,7 +6,7 @@ function checkMailStatus(){
     var email=$('#emailid').val();
     $.ajax({
         type:'post',
-        url:'checkMail',
+        url:'http://localhost:3100/api/checkMail',
         data:{email:email},
         success:function(msg){
             document.getElementById("emailwarning").innerHTML="  Error : "+msg;
@@ -19,7 +19,7 @@ function checkPhoneStatus(){
     var phoneno=$('#phoneno').val();
     $.ajax({
         type:'post',
-        url:'checkPhone',
+        url:'http://localhost:3100/api/checkPhone',
         data:{phoneno:phoneno},
         success:function(msg){
             document.getElementById('phonewarning').innerHTML="  Error: "+msg;

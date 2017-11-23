@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 
 var port = process.env.PORT || 3001;
-//var Student = require('./models/Student.js');
+var Student = require('./model/Student.js');
 
 
 
@@ -34,62 +34,62 @@ router.get('/',function(req,res){
     res.json({mesage:'API initialized'});
 })
 
-// mongoose.Promise = global.Promise;
-// mongoose.connect("mongodb://localhost:27017/StudentPortal", { useMongoClient: true });
+ mongoose.Promise = global.Promise;
+ mongoose.connect("mongodb://localhost:27017/StudentPortal", { useMongoClient: true });
 
-// app.post('/login',function(req,res){
-//     Student.authenticateUser(req.body.username,req.body.password,function(err,data){
-//         if(err){
-//         res.send(err);
-//         }
-//         else{
-//             res.redirect('/portal');
-//         }
-//     })
-// })
-// app.get('/portal',function(req,res){
-//     res.send("Successfully Logged in");
-// })
-// app.post('/register', function (req, res) {
+router.post('/login',function(req,res){
+    Student.authenticateUser(req.body.username,req.body.password,function(err,data){
+        if(err){
+        res.send(err);
+        }
+        else{
+            res.redirect('/api/portal');
+        }
+    })
+})
+router.get('/portal',function(req,res){
+    res.send("Successfully Logged in");
+})
+router.post('/register', function (req, res) {
 
-//     var student = new Student(req.body);
-//     student.save(function (err) {
-//         if (err) {
-//             chalk.red(console.log(err));
-//             return res.send("error occured in registration");
-//         }
-//         return res.send("You have registered successfully");
-//     })
-//     console.log(req.body);
+    var student = new Student(req.body);
+    student.save(function (err) {
+        if (err) {
+            chalk.red(console.log(err));
+            return res.send("error occured in registration");
+        }
+        return res.send("You have registered successfully");
+    })
+    //console.log(req.body);
 
-// })
+})
 
-// app.post('/checkMail', function (req, res) {
-//     Student.find({ emailid: req.body.email }, function (err, user) {
-//         console.log("inside find");
-//         if (err) {
-//             console.log("database error");
-//             res.send("Error Occured");
-//         }
-//         console.log(user);
-//         if (user.length != 0) {
-//             res.send("Email id already exists");
-//         }
-//     })
-// })
-// app.post('/checkPhone', function (req, res) {
-//     Student.find({ phoneno: req.body.phoneno }, function (err, user) {
-//         console.log("inside find");
-//         if (err) {
-//             console.log("database error");
-//             res.send("Error Occured");
-//         }
-//         console.log(user);
-//         if (user.length != 0) {
-//             res.send("Phone No already exists");
-//         }
-//     })
-// })
+router.post('/checkMail', function (req, res) {
+    Student.find({ emailid: req.body.email }, function (err, user) {
+     //   console.log("inside find");
+        if (err) {
+            console.log("database error");
+            res.send("Error Occured");
+        }
+   //     console.log(user);
+        if (user.length != 0) {
+            res.send("Email id already exists");
+        }
+    })
+})
+router.post('/checkPhone', function (req, res) {
+    Student.find({ phoneno: req.body.phoneno }, function (err, user) {
+//        console.log("inside find");
+        if (err) {
+            console.log("database error");
+            res.send("Error Occured");
+        }
+  //      console.log(user);
+        if (user.length != 0) {
+            res.send("Phone No already exists");
+        }
+    })
+})
 app.listen(port, function () {
     chalk.green(console.log("server is listening at PORT: " + port));
 })

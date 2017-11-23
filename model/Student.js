@@ -45,13 +45,13 @@ StudentSchema.statics.authenticateUser=function(username,password,callback){
         else if(!user){
             var err=new Error("username not found");
             err.status=401;
-            err.name="111";
+            err.message="Username not found";
             return callback(err);
         } 
         else if(password!==user.password){
             var err=new Error("Bad credentials.password doesn't match with given username.");
             err.status=401;
-            err.name="111";
+            err.message="Bad credentials.password doesn't match with given username.";
             return callback(err);
         }
         return callback(null,user);
