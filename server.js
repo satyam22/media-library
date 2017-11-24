@@ -41,7 +41,7 @@ router.post('/login',function(req,res){
     console.log(req.body);
     Student.authenticateUser(req.body.username,req.body.password,function(err,data){
         if(err){
-        res.json({statusCode:'401'});
+            res.status(err.status||401).json({message:'invalid authentication details'});
         }
         else{
             res.json({statusCode:'200'});

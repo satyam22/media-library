@@ -1,29 +1,56 @@
 import React,{Component} from 'react';
-import '../stylesheets/style.css'
+import '../stylesheets/style.css';
+import Portal from './Portal';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 export default class Login extends Component{
     constructor(props){
         super(props);
         this.state={
             username:'',
-            password:''
+            password:'',
+            isAuthenticated:false
         };
+        this.handleSubmit=this.handleSubmit.bind(this);
+        this.usernameChange=this.usernameChange.bind(this);
+        this.passwordChange=this.passwordChange.bind(this);
     }
-    handleClick(event){
+    handleSubmit(event){
+        event.preventDefault();
         console.log("inside handle event");
         var apiBaseURl="http://localhost:3100/api/";
-       // var self=this;
+        var self=this; 
         var payload={
             "username":this.state.username,
-            "pasword":this.state.password
+            "password":this.state.password
         };
         console.log("======payload===");
         console.log(payload);
         axios.post(apiBaseURl+'login',payload).then(function(response){
+            console.log("inside response");
             console.log(response);
+          //  this.props.history.push('/portal');
+          self.setState({isAuthenticated:true});
+          console.log(this.state);
+        }).catch(function(error){
         })
     }
+    usernameChange(e){
+        this.setState({username:e.target.value});
+    }
+    passwordChange(e){
+        this.setState({password:e.target.value});
+    }
     render(){
+        const {from}=this.props.location.state||'/';
+        const {isAuthenticated}=this.state;
+        console.log("==============");
+        console.log(isAuthenticated);
+        if(this.state.isAuthenticated){
+            return(
+                <Redirect to={'/portal'} />
+            )
+        }        
         return(
             <div className="container-fluid login-body">
             <div className="row">
@@ -33,15 +60,15 @@ export default class Login extends Component{
                             <h3 className="panel-title">Please Sign In</h3>
                         </div>
                         <div className="panel-body">
-                            <form >
+                            <form onSubmit={this.handleSubmit}>
                                 <fieldset>
                                     <div className="form-group">
                                         <input className="form-control" placeholder="USER NAME" type="email" required autoFocus 
-                                        onChange={(event,newValue)=>this.setState({username:newValue})}/>
+                                        value={this.state.username} onChange={this.usernameChange}/>
                                     </div>
                                     <div className="form-group">
                                     <input className="form-control" placeholder="Password"  type="password" required
-                                    onChange={(event,newValue)=>this.setState({password:newValue})} />
+                                    value={this.state.password} onChange={this.passwordChange} />
                                     </div>
                                     <div className="checkbox">
                                         <label>
@@ -53,8 +80,7 @@ export default class Login extends Component{
                                     
                                     </div>
                                     
-                                    <button type="submit" className="btn btn-block btn-success"
-                                    onClick={(event)=>this.handleClick(event)}>Login</button>
+                                    <button type="submit" className="btn btn-block btn-success">Login</button>
                                 </fieldset>
                             </form>
                         </div>
@@ -62,7 +88,7 @@ export default class Login extends Component{
                 </div>
             </div>
         </div>
-    
+
         )
     }
 }
