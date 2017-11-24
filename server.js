@@ -16,9 +16,8 @@ var router=express.Router();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api',express.static(path.join(__dirname, 'src/btadmin/public')));
 
-
-//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req,res,next){
     res.setHeader('Access-Control-Allow-Origin',"*");
@@ -30,6 +29,7 @@ app.use(function(req,res,next){
 })
 
 app.use('/api',router);
+
 router.get('/',function(req,res){
     res.json({mesage:'API initialized'});
 })
@@ -38,12 +38,13 @@ router.get('/',function(req,res){
  mongoose.connect("mongodb://localhost:27017/StudentPortal", { useMongoClient: true });
 
 router.post('/login',function(req,res){
+    console.log(req.body);
     Student.authenticateUser(req.body.username,req.body.password,function(err,data){
         if(err){
-        res.send(err);
+        res.json({statusCode:'401'});
         }
         else{
-            res.redirect('/api/portal');
+            res.json({statusCode:'200'});
         }
     })
 })
