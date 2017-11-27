@@ -3,7 +3,7 @@ var chalk = require('chalk');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var jwt=require('jsonwebtoken');
 
 
 var port = process.env.PORT || 3001;
@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api',express.static(path.join(__dirname, 'src/btadmin/public')));
 
+app.set("jwt_secret_key","studentportal123");
 
 app.use(function(req,res,next){
     res.setHeader('Access-Control-Allow-Origin',"*");
@@ -28,7 +29,6 @@ app.use(function(req,res,next){
     next();
 })
 
-app.use('/api',router);
 
 router.get('/',function(req,res){
     res.json({mesage:'API initialized'});
@@ -38,18 +38,26 @@ router.get('/',function(req,res){
  mongoose.connect("mongodb://localhost:27017/StudentPortal", { useMongoClient: true });
 
 router.post('/login',function(req,res){
-    console.log(req.body);
+   // console.log(req.body);
     Student.authenticateUser(req.body.username,req.body.password,function(err,data){
         if(err){
-            res.status(err.status||401).json({message:'invalid authentication details'});
+            res.status(err.status||401).json({succes:false,message:'invalid authentication details'});
         }
         else{
-            res.json({statusCode:'200'});
+            console.log("=====data======");
+            console.log(data);
+            const payload={
+                userid:data._id
+            }
+            const token=jwt.sign(payload,app.get("jwt_secret_key"),{
+                expiresIn:60*60*24
+            });
+            res.json({
+                token:token,
+                message:"Save this token. Use it to access protrected resources"
+            })
         }
     })
-})
-router.get('/portal',function(req,res){
-    res.send("Successfully Logged in");
 })
 router.post('/register', function (req, res) {
 
@@ -91,6 +99,31 @@ router.post('/checkPhone', function (req, res) {
         }
     })
 })
+router.use(function(req,res,next){
+    console.log("inside check");
+    const token=req.body.token||req.query.token||req.headers['x-access-token'];
+    if(token){
+        jwt.verify(token,app.get("jwt_secret_key"),function(err,decoded){
+            if(err){
+                res.status(err.status||401).json({succes:false,message:"invalid token passed"});
+                res.end();
+            }
+            else{
+                req.decoded=decoded;
+                next();
+            }
+        })
+    }
+    else{
+        res.status(403).json({succes:false,message:"No token provided.Please provide valid token along with request"});
+    }
+})
+router.get('/portal',function(req,res){
+    res.send("Successfully Logged in");
+})
+
+app.use('/api',router);
+
 app.listen(port, function () {
     chalk.green(console.log("server is listening at PORT: " + port));
 })
