@@ -1,63 +1,82 @@
-import React,{Component} from 'react';
-import {PropTypes} from 'prop-types';
-import {reduxForm,Field} from 'redux-form';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-
-// import Errors from '../Notifications/Errors';
-// import Messages from '../Notifications/Messages';
-
+import Errors from '../Notifications/Errors';
+import Messages from '../Notifications/Messages';
 import loginRequest from './actions';
 
 
-class Login extends Component{
-    static propTypes={
-        handleSubmit:PropTypes.func,
-        loginRequest:PropTypes.func,
-        login:PropTypes.shape({
-            successful:PropTypes.bool,
-            requesting:PropTypes.bool,
-            errors:PropTypes.array,
-            messages:PropTypes.array
+class Login extends Component {
+
+    static propTypes = {
+        handleSubmit: PropTypes.func,
+        loginRequest: PropTypes.func,
+        login: PropTypes.shape({
+            successful: PropTypes.bool,
+            requesting: PropTypes.bool,
+            errors: PropTypes.array,
+            messages: PropTypes.array
         })
     };
-    submit=(values)=>{
+
+
+    submit = (values) => {
         this.props.loginRequest(values);
     }
-    render(){
+    render() {
         const {
             handleSubmit,
-            login:{
+            login: {
                 successful,
                 requesting,
                 errors,
-                messages
+                messages,
             }
-        }=this.props;
-        return(
-            <div className="login">
-            <form className="login-form" onSubmit={handleSubmit(this.submit)}>
+        } = this.props;
+        return (
             <div>
-            <label htmlFor="username">User Name</label>
-            <Field name="username" type="text" id="username" component="input" className="username"/>
+                <div className="login">
+                    <form className="login-form" onSubmit={handleSubmit(this.submit)}>
+                        <div>
+                            <label htmlFor="username">User Name</label>
+                            <Field name="username" type="text" id="username" component="input" className="username" />
+                        </div>
+                        <div>
+                            <label htmlFor="password">Password</label>
+                            <Field type="text" name="password" id="password" component="input" className="password" />
+                        </div>
+                        <button action="submit" >Submit</button>
+                    </form>
+                </div>
+                <div className="auth-messages">
+                    {
+                        !requesting && !!errors.length && (<Errors message="Failure to login due to..." errors={errors} />)
+                    }
+                    {
+                        !requesting && !!messages.length && (<Messages messages={messages} />)
+                    }
+                    {
+                        requesting && <div>Logging in...</div>
+                    }
+                    {
+                        !requesting && !successful && (<Link to="/register">Need to Register? click here >></Link>)
+                    }
+                </div>
             </div>
-            <div>
-            <label htmlFor="password">Password</label>
-            <Field type="text" name="password" id="password" component="input" className="password" />
-            </div>
-            <button action="submit" >Submit</button>
-            </form>
-            </div>
+
         )
     }
 }
-const mapStateToProps=(state)=>({
-    login:state.login
+const mapStateToProps = (state) => ({
+    login: state.login
 });
 
-const connected=connect(mapStateToProps,{loginRequest})(Login);
+const connected = connect(mapStateToProps, { loginRequest })(Login);
 
-const formed=reduxForm({
-    form:'login'
+const formed = reduxForm({
+    form: 'login'
 })(connected);
 export default formed;

@@ -33,12 +33,13 @@ app.use(function(req,res,next){
 router.get('/',function(req,res){
     res.json({mesage:'API initialized'});
 })
-
+app.use('/api',router);
  mongoose.Promise = global.Promise;
  mongoose.connect("mongodb://localhost:27017/StudentPortal", { useMongoClient: true });
 
 router.post('/login',function(req,res){
-   // console.log(req.body);
+    console.log("==========inside login function==========");
+    console.log(req.body);
     Student.authenticateUser(req.body.username,req.body.password,function(err,data){
         if(err){
             res.status(err.status||401).json({succes:false,message:'invalid authentication details'});
@@ -99,32 +100,32 @@ router.post('/checkPhone', function (req, res) {
         }
     })
 })
-router.use(function(req,res,next){
-    console.log("inside check");
-    const token=req.body.token||req.query.token||req.headers['x-access-token'];
-    if(token){
-        jwt.verify(token,app.get("jwt_secret_key"),function(err,decoded){
-            if(err){
-                res.status(err.status||401).json({succes:false,message:"invalid token passed"});
-                res.end();
-            }
-            else{
-                console.log("=======decoded=======");
-                console.log(decoded);
-                req.decoded=decoded;
-                next();
-            }
-        })
-    }
-    else{
-        res.status(403).json({succes:false,message:"No token provided.Please provide valid token along with request"});
-    }
-})
+// router.use(function(req,res,next){
+//     console.log("inside check");
+//     const token=req.body.token||req.query.token||req.headers['x-access-token'];
+//     if(token){
+//         jwt.verify(token,app.get("jwt_secret_key"),function(err,decoded){
+//             if(err){
+//                 res.status(err.status||401).json({succes:false,message:"invalid token passed"});
+//                 res.end();
+//             }
+//             else{
+//                 console.log("=======decoded=======");
+//                 console.log(decoded);
+//                 req.decoded=decoded;
+//                 next();
+//             }
+//         })
+//     }
+//     else{
+//         res.status(403).json({succes:false,message:"No token provided.Please provide valid token along with request"});
+//     }
+// })
 router.get('/portal',function(req,res){
     res.send("Successfully Logged in");
 })
 
-app.use('/api',router);
+
 
 app.listen(port, function () {
     chalk.green(console.log("server is listening at PORT: " + port));

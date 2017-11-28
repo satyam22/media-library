@@ -3,7 +3,7 @@ const initialState = {
     requesting: false,
     successful: false,
     messages: [],
-    error: []
+    errors: []
 };
 const reducer = function (state = initialState, action) {
     switch (action.type) {
