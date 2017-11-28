@@ -109,6 +109,8 @@ router.use(function(req,res,next){
                 res.end();
             }
             else{
+                console.log("=======decoded=======");
+                console.log(decoded);
                 req.decoded=decoded;
                 next();
             }

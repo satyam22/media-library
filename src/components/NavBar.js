@@ -26,15 +26,15 @@ class NavBar extends Component {
 
 class NavMenu extends Component {
     render() {
-        var links = this.props.links.map(function (link) {
+        var links = this.props.links.map(function (link,i) {
             if (link.dropdown) {
                 return (
-                    <NavLinkDropdown links={link.links} text={link.text} active={link.active} />
+                    <NavLinkDropdown links={link.links} text={link.text} active={link.active} index={i}/>
                 );
             }
             else {
                 return (
-                    <NavLink linkTo={link.linkTo} text={link.text} active={link.active} />
+                    <NavLink linkTo={link.linkTo} text={link.text} active={link.active} index={i}/>
                 );
             }
         });
@@ -48,16 +48,16 @@ class NavMenu extends Component {
 class NavLinkDropdown extends Component {
     render() {
         var active = false;
-        var links = this.props.links.map(function (link) {
+        var links = this.props.links.map(function (link,i) {
             if (link.active) {
                 active = true;
             }
             return (
-                <NavLink linkTo={link.linkTo} text={link.text} active={link.active} />
+                <NavLink linkTo={link.linkTo} text={link.text} active={link.active} index={i}/>
             );
         });
         return (
-            <li className={"dropdown " + (active ? "active" : "")}>
+            <li className={"dropdown " + (active ? "active" : "")} key={this.props.index}>
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="dalse">
                     {this.props.text}
                 </a>
@@ -71,7 +71,7 @@ class NavLinkDropdown extends Component {
 class NavLink extends Component {
     render() {
         return (
-            <li className={(this.props.active) ? "active" : ""}>
+            <li className={(this.props.active) ? "active" : ""} key={this.props.index}>
                 <a href={this.props.linkTo}>{this.props.text}</a>
             </li>
         );
