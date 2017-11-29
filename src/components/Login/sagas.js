@@ -2,7 +2,6 @@ import { take, fork, cancel, call, put, cancelled } from 'redux-saga/effects';
 import { LOGIN_REQUESTING, LOGIN_SUCCESS, LOGIN_ERROR } from './constants';
 import { setClient, unsetClient } from '../Client/actions';
 import { CLIENT_UNSET } from '../Client/constants';
-import { push } from 'react-router-redux';
 import history from '../../history.js';
 //import {browserHistory} from 'react-router-dom';
 import { handleApiErrors } from '../../lib/api-errors';
@@ -17,10 +16,11 @@ function loginAPI(username, password) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, password })
-    }).then(handleApiErrors).
-        then(response => response.json()).
-        then(json => json).
-        catch((errors) => { throw errors })
+    })
+    .then(handleApiErrors)
+    .then(response => response.json())
+    .then(json => json)
+    .catch((errors) => { throw errors })
 }
 
 function* logout() {

@@ -8,16 +8,16 @@ export function checkIndexAuthorization({ dispatch }) {
     return false;
 }
 
-export function checkPortalAuthorization({ dispatch,getState,history}) {
+export function checkPortalAuthorization({ dispatch,getState}) {
     console.log("=======dispatch=======");
     console.log(dispatch);
     console.log("============inside check portal auth===========");
         const client = getState().client;
         if (client && client.token)
-            return ;
+            return true;
         if (checkAuthorization(dispatch))
-            return ;
-        history.replace({pathname:'/login'});
+            return true;
+            return false;
     }
 export function checkAuthorization(dispatch) {
     console.log("============inside check auth========");
