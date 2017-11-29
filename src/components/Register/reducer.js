@@ -13,7 +13,12 @@ const reducer=function(state=initialState,action){
             requesting:true,messages:[{body:"Register requesting...",time:new Date()}],...state
         };
         case REGISTER_SUCCESSFUL:
-        return {successful:true,...state};
+        return {
+            successful:true,
+            requesting:false,
+            errors:[],
+            messages:[]
+        };
         case REGISTER_ERROR:
         return {
             errors:state.errors.concat([

@@ -64,3 +64,8 @@
   .login-panel button{
       margin-top: 15px;
   }
+  .panel-title{
+      font-size:30px;
+      color:green;
+      text-align: center;
+  }

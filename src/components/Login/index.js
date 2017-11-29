@@ -8,7 +8,7 @@ import Errors from '../Notifications/Errors';
 import Messages from '../Notifications/Messages';
 import loginRequest from './actions';
 
-
+import '../../stylesheets/style.css'
 class Login extends Component {
 
     static propTypes = {
@@ -37,21 +37,26 @@ class Login extends Component {
             }
         } = this.props;
         return (
-            <div>
-                <div className="login">
-                    <form className="login-form" onSubmit={handleSubmit(this.submit)}>
-                        <div>
-                            <label htmlFor="username">User Name</label>
-                            <Field name="username" type="text" id="username" component="input" className="username" />
+            <div className="container-fluid login-body">
+                <div className="login row">
+                <div class="col-md-4 col-md-offset-4">
+                <div className="panel-heading">
+                            <h3 className="panel-title">Please Sign In</h3>
                         </div>
-                        <div>
+                        <div className="panel-body">
+                        <form className="login-form" onSubmit={handleSubmit(this.submit)}>
+                        <div className="form-group">
+                            <label htmlFor="username">User Name</label>
+                            <Field name="username" type="text" id="username" component="input" className="form-control" />
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <Field type="text" name="password" id="password" component="input" className="password" />
+                            <Field type="text" name="password" id="password" component="input" className="form-control" />
                         </div>
                         <button action="submit" >Submit</button>
-                    </form>
-                </div>
-                <div className="auth-messages">
+                    </form>     
+                        </div>
+                        <div className="auth-messages">
                     {
                         !requesting && !!errors.length && (<Errors message="Failure to login due to..." errors={errors} />)
                     }
@@ -65,6 +70,10 @@ class Login extends Component {
                         !requesting && !successful && (<Link to="/register">Need to Register? click here >></Link>)
                     }
                 </div>
+                </div>
+                
+                </div>
+                
             </div>
 
         )
