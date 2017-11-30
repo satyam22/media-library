@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../stylesheets/style.css'
+//import '../../stylesheets/style.css'
 export default class Portal extends Component {
     constructor(props) {
         super(props);

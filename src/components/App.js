@@ -4,7 +4,7 @@ import Login from './Login/index.js';
 import {connect} from 'react-redux';
 import Register from './Register/index.js';
 import Home from './Home';
-import Portal from './Portal';
+import Portal from './Portal/index.js';
 import {checkPortalAuthorization} from '../lib/check-auth';
  class App extends Component{
     render(){

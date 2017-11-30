@@ -1,0 +1,73 @@
+#wrapper {
+    width: 100%;
+  }
+  
+  .navbar-top-links {
+    margin-right: 0;
+    li {
+      display: inline-block;
+      &:last-child {
+        margin-right: 15px;
+      }
+      a {
+        padding: 15px;
+        min-height: 50px;
+      }
+    }
+    .dropdown-menu li {
+      display: block;
+      &:last-child {
+        margin-right: 0px;
+      }
+      a {
+        padding: 3px 20px;
+        min-height: 0;
+        div {
+          white-space: normal;
+        }
+      }
+    }
+    .dropdown-tasks, .dropdown-messages, .dropdown-alerts {
+      width: 310px;
+      min-width: 0px;
+    }
+    .dropdown-messages {
+      margin-left: 5px;
+    }
+    .dropdown-tasks {
+      margin-left: -59px;
+    }
+    .dropdown-alerts {
+      margin-left: -123px;
+    }
+    .dropdown-user {
+      right: 0;
+      left: auto;
+    }
+  }
+  
+  @media (min-width: 768 px) {
+    .navbar-top-links {
+      .dropdown-tasks, .dropdown-messages, .dropdown-alerts {
+        margin-left: auto;
+      }
+    }
+  }
+  
+  .login-body {
+    height: 100vh;
+    background-color: floralwhite;
+  }
+  
+  .login-panel {
+    margin-top: 140px;
+    button {
+      margin-top: 15px;
+    }
+  }
+  
+  .panel-title {
+    font-size: 30px;
+    color: green;
+    text-align: center;
+  }
