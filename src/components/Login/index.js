@@ -8,7 +8,7 @@ import Errors from '../Notifications/Errors';
 import Messages from '../Notifications/Messages';
 import loginRequest from './actions';
 
-import '../../stylesheets/style.css'
+//import '../../stylesheets/style.css'
 class Login extends Component {
 
     static propTypes = {

@@ -3,6 +3,7 @@ import Messages from '../Messages';
 import Tasks from '../Tasks';
 import Alerts from '../Alerts';
 import User from '../User';
+import Radium from 'radium';
 class TopHeader extends Component{
     render(){
         return(
@@ -25,4 +26,6 @@ class TopHeader extends Component{
         )
     }
 };
-export default  TopHeader;
+
+
+export default TopHeader;

@@ -8,7 +8,7 @@ import Messages from '../Notifications/Messages';
 
 
 import { registerRequesting } from './actions';
-import '../../stylesheets/register.css';
+//import '../../stylesheets/register.css';
 
 
 class Register extends Component {
